@@ -15,30 +15,57 @@ This guide covers:
 * A detailed **step-by-step music video creation process** using a real example
 * **Cost management** and editing techniques for multi-clip projects
 
-## 1. Gen-4 Specifications and the Clip-Based Reality
+## 1. Understanding Gen-4's Two-Stage Workflow
 
-### Current Specs (May 2025)
+### Critical Distinction: Gen-4 Image vs Gen-4 Video
 
-| Feature | Gen-4 Base | Gen-4 Turbo | Notes |
-|---------|------------|-------------|-------|
-| **Clip Duration** | 5s or 10s only | 5s or 10s only | Absolute limit: ~120/240 frames @ 24fps |
-| **Credit Cost** | 60/120 credits | 25/50 credits | Per 5s/10s respectively |
-| **Input** | Reference image + text prompt (≤1000 chars) | Same | Reference images are crucial for consistency |
-| **Output** | Silent MP4/GIF, 720p default, 24fps | Same | Various aspect ratios supported |
-| **Key Advantage** | Visual memory across shots | Same | Characters/props/lighting remain stable |
+**Gen-4 actually consists of TWO separate models:**
 
-### Why 5s/10s Changes Everything
+| Feature | Gen-4 Image (with References) | Gen-4 Video (Image-to-Video) |
+|---------|------------------------------|------------------------------|
+| **Function** | Creates consistent character images | Animates single input image |
+| **Input** | Up to 3 reference images + text prompt | Single input image + text prompt |
+| **Output** | Static images with character consistency | 5s or 10s video clips |
+| **Character Consistency** | YES - across multiple image generations | NO - each video is independent |
+| **Credit Cost** | Variable for image generation | 25/50 credits (Turbo) or 60/120 (Base) |
 
-Gen-4 is engineered for **shots**, not entire scenes. A 30-second story sequence equals **three 10s blocks** that you'll stitch in the editor. Runway's documentation treats each clip as a "base shot" you compose into scenes later.
+### The Real Gen-4 Workflow
 
-**Planning in the 5-Second Grid:**
+**Step 1: Image Generation Phase**
+- Use **Gen-4 Image + References** to create all scene images with consistent characters
+- Generate multiple shots of same character in different poses/locations
+- This is where character consistency happens
 
-1. **Grid your timeline** in 5-second markers
-2. Sections ≤ 5s → **one 5s generation**
-3. Sections 6-10s → **one 10s generation** 
-4. Sections > 10s → **chain multiple clips** using continuity techniques
+**Step 2: Video Generation Phase**  
+- Take each generated image individually to **Gen-4 Video**
+- Each image becomes a 5s or 10s animated clip
+- No character memory between different video generations
 
-This grid method forces cinematic thinking: every idea must fit within one or two blocks. It reduces prompt bloat and keeps costs predictable.
+**Step 3: Editorial Phase**
+- Edit the animated clips together into final video
+
+### Why This Two-Stage Approach Matters
+
+**Understanding Gen-4's Architecture:**
+- Character consistency only exists within Gen-4 Image generation
+- Each Gen-4 Video clip is completely independent
+- Must pre-generate ALL scene images before creating videos
+
+### Planning for the Two-Stage Workflow
+
+**Phase 1: Generate All Scene Images**
+1. Create character references using Gen-4 Image
+2. Generate every shot/angle you need as static images using References
+3. Verify character consistency across all generated images
+
+**Phase 2: Animate Each Scene**  
+1. Feed each pre-generated image to Gen-4 Video individually
+2. Focus prompts purely on motion/camera movement
+3. No character consistency management needed (already handled in Phase 1)
+
+**Phase 3: Editorial Assembly**
+1. Edit animated clips together
+2. Character consistency maintained because all clips derived from consistent images
 
 ## 2. Creating Foundation Images for Gen-4
 
@@ -135,45 +162,63 @@ shallow depth of field, 35mm film aesthetic, soft shadows
    - Use consistently throughout all Gen-4 generations
    - Save successful Gen-4 outputs as additional references
 
-## 3. Maintaining Character Consistency Across Shots
+## 3. Character Consistency Through the Two-Stage Process
 
-With your foundation images created, Gen-4's **"References" system** becomes the key to maintaining consistency. This solves the major problem of earlier models where the same character would look different in each clip.
+### Stage 1: Creating Consistent Characters with Gen-4 Image + References
 
-### The Reference Image Strategy
+**The References System (Gen-4 Image Only):**
+Gen-4 References allow you to generate consistent characters in new images across endless lighting conditions, locations and treatments with just a single reference image.
 
-**Character References:**
-* Upload 1-3 clear photos per main character (head-and-shoulders work best)
-* Tag them in prompts: `<ref 1> turns toward camera, surprised expression`
-* Gen-4 preserves facial features, hairstyle, and clothing across different scenes
-* Works even when changing angles, lighting, or locations
+**How References Work:**
+1. Upload 1-3 reference images of your character
+2. Save references with names (e.g., @caregiver, @elder, @singer)  
+3. Generate new images using: `@caregiver in bedroom, morning light`
+4. Character appearance stays consistent across different generated images
 
-**Best Practices for Character References:**
-* Use high-quality, well-lit images showing distinct features
-* Maintain the same reference images across all clips featuring that character
-* Save and reload references between sessions for consistency
-* Consider using Gen-4's own output as new references to refine consistency
-
-### Iterative Reference Refinement
-
-**Pro technique:** Use Gen-4's output to improve future consistency:
-
-1. Generate a shot of your character
-2. Extract the best frame showing clear character details
-3. Upload this frame as a new reference for subsequent shots
-4. This "iterative refinement" hones extremely reliable character continuity
-
-### Multi-Element References
-
-Gen-4 supports multiple reference types:
-* **Character references** for people
-* **Prop references** for objects that must remain consistent (like a specific cup or vehicle)
-* **Environment references** for maintaining location consistency across angles
-
-**Example prompt with multiple references:**
+**Character Reference Strategy:**
 ```
-<ref: Character1> sits at <ref: KitchenTable> holding <ref: BlueCup>, 
-morning light through window, medium shot, 10-second take
+Stage 1 - Character Creation:
+- Upload reference photo of caregiver character → save as @caregiver
+- Generate: "@caregiver in bedroom doorway, carrying soup tray"
+- Generate: "@caregiver sitting beside bed, holding hand"  
+- Generate: "@caregiver in hallway, shocked expression, dropping cup"
+- Generate: "@caregiver embracing friend, forgiveness scene"
 ```
+
+### Stage 2: Animating Pre-Generated Character Images
+
+**Gen-4 Video Process:**
+1. Take each consistent character image from Stage 1
+2. Upload to Gen-4 Video as input image
+3. Write motion-focused prompt (NOT character description)
+4. Generate 5s or 10s animated clip
+
+**Motion-Focused Prompting:**
+```
+Input: Image of @caregiver in doorway with soup
+Prompt: "walks forward slowly, gentle movement, warm lighting"
+
+Input: Image of @caregiver holding elder's hand  
+Prompt: "slight head nod, compassionate expression, static camera"
+
+Input: Image of @caregiver dropping cup
+Prompt: "cup falls in slow motion, character reacts with shock"
+```
+
+### Critical Understanding: No Cross-Video Consistency
+
+**What Gen-4 Video CANNOT Do:**
+- Remember characters from previous video generations
+- Maintain consistency between different animated clips
+- Access the References system during video generation
+
+**What Gen-4 Video CAN Do:**
+- Animate any input image with natural motion
+- Follow specific motion/camera instructions
+- Create high-quality 5s/10s clips from static images
+
+**The Solution:**
+All character consistency MUST be established in the image generation phase using References, then each consistent image is animated separately.
 
 ## 3. General Strategies and Best Practices for Gen-4
 
@@ -409,49 +454,66 @@ cozy creative space, natural lighting mixed with warm practicals
 - [ ] Clean composition suitable for video generation
 - [ ] Appropriate for intended video aspect ratio
 
-### 5.4 Detailed Prompt Examples
+### 5.4 Corrected Music Video Production Process
 
-**Piano Intro (5s):**
-```
-Extreme close-up of piano keys, morning sunlight streaming,
-dust motes floating in warm light beams,
-shallow depth of field, gentle camera breathing,
-5-second meditative shot
-```
+**Stage 1: Generate All Scene Images Using References**
 
-**Verse 1 Caregiver Scene (10s):**
+**Character Reference Setup:**
 ```
-<ref: Caregiver> enters bedroom doorway carrying soup tray,
-walks to <ref: Elder> in bed, sits beside,
-warm morning light through <ref: Window>,
-handheld camera tracks from doorway to bedside,
-10-second continuous take, intimate framing
+Upload character photos to Gen-4 Image:
+- Singer: @singer (warm, expressive performer)
+- Caregiver: @caregiver (young adult, compassionate)  
+- Elder: @elder (distinguished, warm)
+- Friend: @friend (peer to caregiver, conflicted)
 ```
 
-**Hand-Holding Moment (10s):**
+**Generate Scene Images with Consistent Characters:**
 ```
-Close-up on <ref: Caregiver> hand gently holding <ref: Elder> hand,
-same bedroom setting, warm light continues,
-camera slowly pulls focus from hands to faces,
-tender moment, 10-second emotional beat
+Intro scenes:
+- "@singer at piano, soft morning light, intimate setting"
+- "Piano keys close-up, dust motes in sunlight"
+
+Verse 1 care scenes:
+- "@caregiver in doorway with soup tray, bedroom setting"
+- "@caregiver and @elder, hand-holding moment, warm light"
+- "@singer performing, eyes closed, empathetic expression"
+
+Betrayal scenes:  
+- "@caregiver in hallway, overhearing whispers, shocked"
+- "@friend turning away guiltily, hallway background"
+- "@caregiver dropping blue ceramic cup, pieces scattering"
+
+Resolution scenes:
+- "@caregiver and @friend embracing, forgiveness moment"
+- "@singer with joyful expression, golden hour lighting"
+- "Blue ceramic cup repaired, sunlight through window"
 ```
 
-**Betrayal Cup Drop (10s):**
+**Stage 2: Animate Each Generated Image**
+
+Take each consistent character image and animate with Gen-4 Video:
+
 ```
-<ref: Caregiver> in hallway, overhears whisper, turns shocked,
-<ref: BlueCup> falls from hand in slow-motion,
-camera follows cup's fall, shatters on floor,
-cool grey lighting, dramatic moment,
-10-second sequence ending on scattered pieces
+Image: @caregiver with soup tray in doorway
+Video Prompt: "walks forward gently, approaches bed, warm movement"
+Duration: 10s
+
+Image: @caregiver and @elder hand-holding  
+Video Prompt: "slight nod, tender moment, minimal movement"
+Duration: 10s
+
+Image: @caregiver dropping cup
+Video Prompt: "cup falls in slow motion, character expression shifts to shock"
+Duration: 10s
+
+Image: @singer at piano
+Video Prompt: "gentle performance, fingers on keys, emotional singing"
+Duration: 10s
 ```
 
-**Singer Mouth Close-up (5s):**
-```
-Extreme close-up <ref: Singer> mouth singing "curse is poured",
-catch breath condensation on microphone,
-dramatic lighting, slight camera jolt on plosive,
-5-second emphasis shot
-```
+**Stage 3: Editorial Assembly**
+
+Now all your video clips feature consistent characters because they were all derived from images generated using the same character references. Edit them together following your original timeline plan.
 
 ### 5.5 Maintaining Visual Continuity
 
@@ -515,24 +577,27 @@ dramatic lighting, slight camera jolt on plosive,
 * Bridge sections: 50/50 or transition focus
 * Use 5s clips for quick cuts between performance and narrative
 
-### 5.8 Cost Management for Full Production
+### 5.8 Realistic Cost Calculation for Two-Stage Process
 
-**Smart Generation Strategy:**
-1. **Prototype phase:** Generate all clips at 5s Turbo to test prompts and references
-2. **Refinement phase:** Regenerate successful concepts at full 10s Turbo
-3. **Final phase:** Upgrade hero shots to Gen-4 Base for maximum quality
+**Stage 1: Image Generation (Using Gen-4 Image + References)**
+- Character reference setup: 5 test images × variable cost
+- Scene image generation: 40 final scene images × variable cost  
+- Multiple angle generation: 20 additional angles × variable cost
+- **Estimated total:** ~800-1200 credits for image generation phase
 
-**Credit Allocation Example:**
-* **Prototyping:** 40 clips × 5s × 25 credits = 1,000 credits
-* **Production:** 35 clips × 10s × 50 credits = 1,750 credits  
-* **Hero upgrades:** 10 clips × 10s × 120 credits = 1,200 credits
-* **Total project:** ~4,000 credits
+**Stage 2: Video Animation (Using Gen-4 Video)**
+- 35 scene animations × 10s × 50 credits (Turbo) = 1,750 credits
+- 15 cutaway animations × 5s × 25 credits (Turbo) = 375 credits
+- 10 hero shot upgrades × 10s × 120 credits (Base) = 1,200 credits
+- **Total video generation:** ~3,325 credits
 
-**Budget Optimization Tips:**
-* Test character/prop references thoroughly in 5s clips first
-* Generate multiple prompt variations during prototyping
-* Only upgrade to Gen-4 Base for shots that will be featured prominently
-* Use Turbo for B-roll and quick cutaways
+**Complete Project Total: ~4,500-5,000 credits**
+
+**Budget Optimization Strategy:**
+1. **Image Phase:** Generate multiple options, select best before animating
+2. **Video Phase:** Use Turbo for most clips, Base only for hero moments  
+3. **Testing:** Use 5s clips to test motion before committing to 10s
+4. **Reuse:** Generate extra angles during image phase for editing flexibility
 
 ## 6. Advanced Editing Techniques for Multi-Clip Projects
 
@@ -782,50 +847,41 @@ Create your main locations from multiple angles:
 
 ### Character Consistency Issues
 
-**Problem:** Character appearance drifts between clips
+**Problem:** Characters look different between video clips
+**Root Cause:** Character references only work in Gen-4 Image, not Gen-4 Video
 **Solutions:**
-* Re-generate character references with more specific details using text-to-image
-* Ensure consistent prompt wording for character descriptions
-* Generate test clips to verify reference effectiveness before production
-* Use shorter, clearer prompts focusing on essential character elements
-* Create multiple backup references for critical characters
+* Generate ALL character images first using Gen-4 Image + References
+* Verify character consistency across all images before animating
+* Never rely on Gen-4 Video to maintain character consistency between clips
+* Use the same character reference images throughout entire image generation phase
 
-### Image-to-Video Consistency Issues
+### Two-Stage Workflow Confusion
 
-**Problem:** Gen-4 output doesn't match reference image well
+**Problem:** Expecting character consistency across video generations
+**Root Cause:** Gen-4 Image and Gen-4 Video are separate tools with different capabilities  
 **Solutions:**
-* Regenerate reference with cleaner composition and lighting
-* Use more detailed text descriptions alongside image reference
-* Test different reference image styles to find what works best with Gen-4
-* Consider using Gen-4's own output as improved references
+* Always complete image generation phase before starting video animation
+* Treat each video generation as independent (no memory between clips)
+* Plan your shots as images first, then as animated sequences
+* Budget for both image generation AND video animation costs
 
-### Clip Length Limitations
+### Image-to-Video Quality Issues
 
-**Problem:** Story moment needs more than 10s
+**Problem:** Generated images don't animate well
 **Solutions:**
-* Use last-frame chaining technique for seamless continuation
-* Break moment into logical sub-actions across multiple clips
-* Plan camera angle changes to hide natural edit points
-* Accept edit points as part of cinematic rhythm
+* Create images specifically designed for animation (clear subjects, good composition)
+* Avoid overly complex or cluttered image compositions
+* Generate multiple angle options during image phase
+* Test animation on simple images before creating complex scenes
 
-### Motion and Camera Issues
+### Cost Overruns from Two-Stage Process
 
-**Problem:** Unwanted camera movement or character actions
+**Problem:** Higher than expected credit usage
 **Solutions:**
-* Specify "static camera" or "locked-off shot" for stability
-* Use more specific action verbs in prompts
-* Regenerate with slightly different prompt wording
-* Generate multiple versions and select best motion
-
-### Cost Overruns
-
-**Problem:** Credit usage exceeding budget
-**Solutions:**
-* Prototype everything in 5s Turbo before committing to 10s
-* Use text-to-image first to perfect references before Gen-4 testing
-* Prioritize which shots truly need Gen-4 Base quality
-* Reuse successful clips across similar musical sections
-* Generate fewer variations, focus on getting prompts right first time
+* Budget for BOTH image and video generation phases  
+* Generate fewer image variations, focus on quality over quantity
+* Use image generation to test character/scene concepts before video phase
+* Consider external image generation tools for initial concept development
 
 ## Conclusion
 
@@ -833,25 +889,25 @@ RunwayML Gen-4 represents a quantum leap in AI video generation capabilities, pa
 
 The key to success with Gen-4 lies in **embracing its clip-based workflow** rather than fighting against it. By thinking like a film director—planning in shots, using references for consistency, and leveraging professional editing techniques—you can create sophisticated video content that rivals traditional production methods.
 
-**Gen-4's Core Strengths:**
-* **Visual memory** that maintains consistency across shots
-* **Cinematic understanding** that translates film language into appropriate visuals  
-* **Stylized realism** that balances artistic vision with believable motion
-* **Rapid iteration** that allows creative experimentation at unprecedented speed
+**Gen-4's Revolutionary Two-Stage Approach:**
+* **Stage 1 (Gen-4 Image + References):** Creates consistent character images across any scenario
+* **Stage 2 (Gen-4 Video):** Animates each pre-generated image with natural motion  
+* **Editorial Assembly:** Combines animated clips into cohesive narratives
 
-**Success Requirements:**
-* **Thorough planning** using the 5s/10s grid methodology
-* **Strategic use of references** for characters, props, and environments
-* **Cinematic thinking** in prompt construction and shot composition
-* **Professional editing** to unify individual clips into cohesive narratives
+**Critical Success Factors:**
+* **Understand the separation:** Character consistency happens in image generation, not video generation
+* **Plan comprehensively:** Generate all scene images before starting animation
+* **Budget realistically:** Account for both image and video generation costs
+* **Think cinematically:** Each image becomes a shot in your final edit
 
-The 5-second and 10-second clip limits aren't restrictions—they're the foundation of a new creative workflow that encourages disciplined storytelling and professional production techniques. Each clip becomes a carefully crafted shot in your larger cinematic vision.
+The power of Gen-4 lies not in a single unified workflow, but in the intelligent combination of two specialized tools. Gen-4 Image provides unprecedented character and scene consistency across static images, while Gen-4 Video delivers natural motion and cinematic quality. By mastering both stages and their interaction, creators can produce narrative content with visual consistency that was previously impossible with AI tools.
 
-Whether you're creating a music video that weaves performance with narrative, a commercial that maintains brand consistency across multiple scenarios, a short film that develops characters over time, or experimental content that pushes creative boundaries, Gen-4 provides the consistency and control needed to realize your vision.
+**The Future of AI Video Creation:**
+Gen-4 establishes a new paradigm where AI video creation follows a more traditional production methodology: pre-production (image generation), production (animation), and post-production (editing). This approach may seem more complex than "one-click video generation," but it provides the control and consistency necessary for professional-quality narrative content.
 
-The future of AI video generation isn't about replacing human creativity—it's about amplifying it. Gen-4 handles the technical complexity of video generation while you focus on the essential human elements: storytelling, emotion, and artistic vision. With the techniques outlined in this guide, you're equipped to harness Gen-4's capabilities and create compelling video content that engages audiences and tells meaningful stories.
+Whether you're creating music videos that weave performance with story, commercials that maintain brand consistency, or experimental content that pushes creative boundaries, Gen-4's two-stage approach provides the foundation for cinematic AI video creation. The tools are sophisticated, the workflow is proven, and the creative possibilities are vast.
 
-The tools are ready. The techniques are proven. Now it's time to create.
+Master the two-stage process, and you'll be equipped to create compelling video content that leverages AI's generative power while maintaining the narrative coherence and visual consistency that audiences expect from professional media.
 
 ---
 
