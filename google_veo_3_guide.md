@@ -1,6 +1,6 @@
 # Cinematic AI Storytelling with Google Veo 3: A Comprehensive Guide
 
-> Prepared by Jon Davis
+> Full Disclosure: Prepared by Jon Davis
 > leveraging ChatGPT (O3 model) Deep Research and edited by Claude Sonnet 4.0
 
 ## Introduction
