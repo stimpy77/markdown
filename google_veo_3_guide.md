@@ -1,5 +1,8 @@
 # Cinematic AI Storytelling with Google Veo 3: A Comprehensive Guide
 
+> Prepared by Jon Davis
+> leveraging ChatGPT (O3 model) Deep Research and edited by Claude Sonnet 4.0
+
 ## Introduction
 
 Google **Veo 3** represents a revolutionary leap in text-to-video generation, bringing advanced cinematic control and **character consistency** to AI filmmaking. Released at Google I/O 2025, Veo 3 is the first major AI video model to generate **synchronized audio** alongside video – from ambient sounds to characters speaking dialogue. The model excels at understanding nuanced prompts and complex scenes, producing realistic motion and physics with stunning prompt adherence. Most importantly for storytellers, Veo 3 is designed to maintain a cohesive **visual world** across multiple shots, allowing the same characters, props, and locations to persist from clip to clip.
